@@ -1,0 +1,32 @@
+{
+  "name": "pinia-use-persist",
+  "version": "0.0.11",
+  "scripts": {
+    "build": "rimraf dist && tsup src/index.ts --dts --format cjs,esm"
+  },
+  "description": "Easy to use persist plugin with configurable encryption, Currently in development, but already used in real production for simple scenarios",
+  "keywords": [
+    "pinia",
+    "persist"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "peerDependencies": {
+    "pinia": "^2.0.14",
+    "crypto-js": "^4.1.1"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "pinia": "^2.0.14"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "vue-tsc": "^0.34.7",
+    "rimraf": "^3.0.2",
+    "tsup": "^5.12.8"
+  }
+}
