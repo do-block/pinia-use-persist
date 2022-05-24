@@ -1,6 +1,6 @@
 import {PiniaPluginContext, StateTree, PiniaCustomStateProperties} from 'pinia';
 
-import {AES} from 'crypto-js'
+import {AES, enc} from 'crypto-js'
 
 type Store = PiniaPluginContext['store'];
 
@@ -51,11 +51,13 @@ const storageSet = (store: Store, storage: Storage, encryptionKey?: string, keys
 
 const storageSync = (store: Store, storage: Storage, oldState: string | null, encryptionKey?: string, keys?: string[]) => {
   if (oldState) {
-    let stateObj = JSON.parse(oldState);
+    let stateObj:Record<string, any>
     if (encryptionKey) {
       const bytes = AES.decrypt(oldState, encryptionKey);
-      const originalText = bytes.toString(CryptoJS.enc.Utf8);
+      const originalText = bytes.toString(enc.Utf8);
       stateObj = JSON.parse(originalText);
+    }else {
+      stateObj = JSON.parse(oldState);
     }
 
     if (!keys) {
@@ -76,7 +78,7 @@ const storageSync = (store: Store, storage: Storage, oldState: string | null, en
   }
 }
 
-export function myPiniaPlugin({store, options}: PiniaPluginContext) {
+export function usePersist({store, options}: PiniaPluginContext) {
   if (options.persist?.enabled) {
     if (options.persist.keys && !Array.isArray(options.persist.keys)) {
       console.warn('Persist keys is String[]', store.$id);
