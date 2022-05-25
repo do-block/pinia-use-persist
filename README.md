@@ -1,4 +1,4 @@
-# Documentation 
+# Documentation
 
 ## Install
 ```typescript
@@ -43,16 +43,16 @@ export const useStore = defineStore('main', {
 
 <script setup lang='ts'>
 import { useStore } from '@/store/store.ts'
-const store = useStore() 
+const store = useStore()
 
 const add = () => {
   store.$patch((state) => {
     state.counter = state.counter + 1
   })
-} 
+}
 </script>
 
-<template>   
+<template>
   <div>
     <p>{{store.$state.counter}}</p>
     <button @click="add">+</button>
@@ -61,6 +61,12 @@ const add = () => {
 
 ```
 
-Note: 📢
+### Note: 📢
 
 When you add new key-value in store.ts file, you need to reload the page to achieve persistence.
+
+### Plan 📢
+
+1. Logger
+2. Encryption
+3. ...

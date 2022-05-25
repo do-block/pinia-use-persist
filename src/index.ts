@@ -1,4 +1,5 @@
 import {PiniaPluginContext, StateTree, PiniaCustomStateProperties} from 'pinia';
+import colors from "picocolors"
 
 import {AES, enc} from 'crypto-js'
 
@@ -79,6 +80,7 @@ const storageSync = (store: Store, storage: Storage, oldState: string | null, en
 }
 
 export function usePersist({store, options}: PiniaPluginContext) {
+  console.log(colors.red('usePersist'));
   if (options.persist?.enabled) {
     if (options.persist.keys && !Array.isArray(options.persist.keys)) {
       console.warn('Persist keys is String[]', store.$id);
