@@ -102,7 +102,5 @@ export function usePersist({store, options}: PiniaPluginContext) {
       detached: options.persist?.detached || true,
       deep: true,
     });
-  } else {
-    console.warn('Persistence is used but persistent storage is not enabled, please check the configuration', store.$id);
   }
 }
