@@ -1,6 +1,6 @@
 {
   "name": "pinia-use-persist",
-  "version": "0.0.16",
+  "version": "0.0.19.1",
   "scripts": {
     "build": "esno scripts/build.ts"
   },

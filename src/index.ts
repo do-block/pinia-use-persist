@@ -1,5 +1,4 @@
 import {PiniaPluginContext, StateTree, PiniaCustomStateProperties} from 'pinia';
-import colors from "picocolors"
 
 import {AES, enc} from 'crypto-js'
 
@@ -52,12 +51,12 @@ const storageSet = (store: Store, storage: Storage, encryptionKey?: string, keys
 
 const storageSync = (store: Store, storage: Storage, oldState: string | null, encryptionKey?: string, keys?: string[]) => {
   if (oldState) {
-    let stateObj:Record<string, any>
+    let stateObj: Record<string, any>
     if (encryptionKey) {
       const bytes = AES.decrypt(oldState, encryptionKey);
       const originalText = bytes.toString(enc.Utf8);
       stateObj = JSON.parse(originalText);
-    }else {
+    } else {
       stateObj = JSON.parse(oldState);
     }
 
@@ -79,16 +78,15 @@ const storageSync = (store: Store, storage: Storage, oldState: string | null, en
   }
 }
 
-export function usePersist({store, options}: PiniaPluginContext) {
-  console.log(colors.red('usePersist'));
-  if (options.persist?.enabled) {
-    if (options.persist.keys && !Array.isArray(options.persist.keys)) {
+export function usePersist({store, options: {persist}}: PiniaPluginContext) {
+  if (persist?.enabled) {
+    if (persist.keys && !Array.isArray(persist.keys)) {
       console.warn('Persist keys is String[]', store.$id);
     }
 
-    const keys = options.persist?.keys
-    const storage = options.persist?.storage || localStorage;
-    const encryptionKey = options.persist?.encryptionKey
+    const keys = persist?.keys
+    const storage = persist?.storage || localStorage;
+    const encryptionKey = persist?.encryptionKey
 
     try {
       const oldState = storage.getItem(store.$id);
@@ -101,8 +99,12 @@ export function usePersist({store, options}: PiniaPluginContext) {
       console.log('Persist update', store.$state);
       storageSet(store, storage, encryptionKey, keys);
     }, {
-      detached: options.persist?.detached || true,
+      detached: persist?.detached || true,
       deep: true,
     });
+  } else {
+    if (persist && Object.keys(persist).length) {
+      console.log(`Persist is not enabled, the current configuration in ${store.$id} will not take effect`);
+    }
   }
 }
