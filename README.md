@@ -17,7 +17,7 @@ import {usePersist} from 'pinia-use-persist'
 
 const pinia = createPinia()
 
-pinia.use(usePersist())
+pinia.use(usePersist)
 
 app.use(pinia)
 

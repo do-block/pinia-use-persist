@@ -96,15 +96,10 @@ export function usePersist({store, options: {persist}}: PiniaPluginContext) {
     }
 
     store.$subscribe(() => {
-      console.log('Persist update', store.$state);
       storageSet(store, storage, encryptionKey, keys);
     }, {
       detached: persist?.detached || true,
       deep: true,
     });
-  } else {
-    if (persist && Object.keys(persist).length) {
-      console.log(`Persist is not enabled, the current configuration in ${store.$id} will not take effect`);
-    }
   }
 }
