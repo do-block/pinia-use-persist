@@ -31,9 +31,18 @@ export const useStore = defineStore('main', {
   }),
   persist:{
     enabled: true,
-    key: ['counter'],
+    key: 'Login',
+    cacheFields: ['counter'],
     encryptionKey: 'my-store',
     storage: sessionStorage,
+    customEncryption: {
+      encrypt(state) {
+        return Encrypt(JSON.stringify(state))
+      },
+      decrypt(encryptedState) {
+        return Decrypt(encryptedState)
+      },
+    },
   }
 })
 ```
@@ -68,5 +77,4 @@ When you add new key-value in store.ts file, you need to reload the page to achi
 ### Plan 📢
 
 1. Logger
-2. Encryption
-3. ...
+2. ...
